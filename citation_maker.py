@@ -95,17 +95,17 @@ def get_article(soup):
         journal = 'Журнал не найден'
 
     if len(authors["authors"]) > 4:
-        citation = (f'{title} / {', '.join(authors["authors_reversed"][:3])} [и др.]. – Текст : непосредственный // '
-                  f'{journal}. – {'. – '.join(metric_list)}.')
+        citation = (f'{title} / {", ".join(authors["authors_reversed"][:3])} [и др.]. – Текст : непосредственный // '
+                  f'{journal}. – {". – ".join(metric_list)}.')
     elif len(authors["authors"]) == 4:
-        citation = (f'{title} / {', '.join(authors["authors_reversed"])}. – Текст : непосредственный // '
-                  f'{journal}. – {'. – '.join(metric_list)}.')
+        citation = (f'{title} / {", ".join(authors["authors_reversed"])}. – Текст : непосредственный // '
+                  f'{journal}. – {". – ".join(metric_list)}.')
     elif 4 > len(authors["authors"]) and authors["authors"]:
-        citation = (f'{authors["authors"][0]} {title} / {', '.join(authors["authors_reversed"])}. – '
-                    f'Текст : непосредственный // {journal}. – {'. – '.join(metric_list)}.')
+        citation = (f'{authors["authors"][0]} {title} / {", ".join(authors["authors_reversed"])}. – '
+                    f'Текст : непосредственный // {journal}. – {". – ".join(metric_list)}.')
     else:
         citation = (f'{title}. – Текст : непосредственный // '
-                  f'{journal}. - {'. – '.join(metric_list)}.')
+                  f'{journal}. - {". – ".join(metric_list)}.')
     return citation
 
 def get_conference(soup):
@@ -173,7 +173,7 @@ def get_conference(soup):
         citation = (f'{title} / {", ".join(authors["authors_reversed"][:3])} [и др.]. – Текст : непосредственный // '
                   f'{conf_name1} : {conf_name2}. – {place} : {publisher}, {year}. – С. {pages}.')
     elif len(authors["authors"]) == 4:
-        citation = (f'{title} / {', '.join(authors["authors_reversed"])}. – Текст : непосредственный // '
+        citation = (f'{title} / {", ".join(authors["authors_reversed"])}. – Текст : непосредственный // '
                     f'{conf_name1} : {conf_name2}. – {place} : {publisher}, {year}. – С. {pages}.')
     elif authors["authors"] and 4 > len(authors["authors"]):
         citation = (f'{authors["authors"][0]} {title} / {", ".join(authors["authors_reversed"])}. – '
@@ -245,10 +245,10 @@ def get_authors(soup):
             authors_reg = (r'[а-яА-ЯёЁ]+\s[А-ЯЁ]. [А-ЯЁ]. [А-ЯЁ].|[а-яА-ЯёЁ]+\s[А-ЯЁ].[А-ЯЁ].[А-ЯЁ].|'
                            r'[а-яА-ЯёЁ]+\s[А-ЯЁ]. [А-ЯЁ].|[а-яА-ЯёЁ]+\s[А-ЯЁ].[А-ЯЁ].|[а-яА-ЯёЁ]+\s[А-ЯЁ].')
             authors = [re.search(authors_reg, author).group() for author in authors if re.search(authors_reg, author)]
-            authors_reversed = [(f'{author.split()[1].replace('.', '. ').strip()} '
+            authors_reversed = [(f'{author.split()[1].replace(".", ". ").strip()} '
                                  f'{author.split()[0].lower().capitalize()}') for author in authors]
             authors = [(f'{author.split()[0].lower().capitalize()}, '
-                        f'{author.split()[1].replace('.', '. ').strip()}') for author in authors]
+                        f'{author.split()[1].replace(".", ". ").strip()}') for author in authors]
         else:
             authors = ''
             authors_reversed = ''
