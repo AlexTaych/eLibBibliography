@@ -1,0 +1,100 @@
+body {
+  width: 350px;
+  padding: 0;
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+  background: #FFF5F3;
+}
+
+.container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#citationResult {
+  padding: 18px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(242, 108, 79, 0.08);
+  color: #333;
+  line-height: 1.6;
+  max-height: 300px;
+  overflow-y: auto;
+  border-left: 4px solid #F26C4F;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.controls-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.left-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #555;
+  gap: 6px;
+}
+
+#saveCheckbox {
+  accent-color: #F26C4F;
+}
+
+#clearBtn {
+  padding: 4px 10px;
+  background: #F8E8E5;
+  color: #D32F2F;
+  border: 1px solid #F26C4F;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  transition: all 0.2s ease;
+  width: fit-content;
+  margin-left: 20px;
+}
+
+#clearBtn:hover {
+  background: #F26C4F;
+  color: white;
+}
+
+#copyBtn {
+  width: 42px;
+  height: 42px;
+  background: #F26C4F;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+
+#copyBtn:hover {
+  background: #E05A3E;
+  transform: scale(1.1);
+}
+
+#copyBtn:active {
+  transform: scale(0.95);
+}
+
+#copyBtn::before {
+  content: "⎘";
+}

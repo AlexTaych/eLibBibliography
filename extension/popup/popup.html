@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Citation Generator</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div id="citationResult"></div>
+    
+    <div class="controls-wrapper">
+      <div class="left-controls">
+        <div class="checkbox-container">
+          <input type="checkbox" id="saveCheckbox">
+          <label for="saveCheckbox">Сохранять в библиографию</label>
+        </div>
+        <button id="clearBtn">Очистить библиографию</button>
+      </div>
+      
+      <button id="copyBtn" title="Копировать в буфер обмена"></button>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+**/__pycache__/
+.idea/
+.venv/
+*.py
+/temp.html
+/bibliography.txt
