@@ -2,32 +2,53 @@ from pathlib import Path
 import re
 
 
-
 base_folder = Path(__file__).resolve().parent
 
-def citation_dump(citation):
+
+def citation_dump(citation: str) -> None:
+    """Записывает библиографическое описание в файл с библиографией.
+
+    Args:
+        citation (str): Полное библиографическое описание публикации.
+    """
     with open(base_folder.joinpath("bibliography.txt"), "a", encoding="UTF-8") as bibliography:
         bibliography.write(f'{citation}\n')
 
 
-def clean_bibliography():
+def clean_bibliography() -> None:
+    """Очищает файл с библиографией."""
     with open(base_folder.joinpath("bibliography.txt"), "w", encoding="UTF-8") as bibliography:
         pass
     with open(base_folder.joinpath("urls.txt"), "w", encoding="UTF-8") as urls:
         pass
 
 
-def url_save(url):
+def url_save(url: str) -> None:
+    """Записывает URL публикации в файл со списком адресов публикаций.
+
+    Args:
+        url (str): URL публикации.
+    """
     with open(base_folder.joinpath("urls.txt"), "a", encoding="UTF-8") as urls:
         urls.write(f'{url}\n')
 
 
-def get_urls():
+def get_urls() -> str:
+    """Возвращает содержимое файла со списком адресов публикаций.
+
+    Returns:
+        str: "Список" адресов публикаций.
+    """
     with open(base_folder.joinpath("urls.txt"), "r", encoding="UTF-8") as urls:
         return urls.read()
 
 
-def counter():
+def counter() -> int:
+    """Создает нумерацию для библиографии.
+
+    Returns:
+        int: Номер следующего библиографического описания.
+    """
     if base_folder.joinpath("bibliography.txt").exists():
         with open(base_folder.joinpath("bibliography.txt"), "r", encoding="utf-8") as f:
             temp_bibl = f.readlines()
@@ -38,4 +59,4 @@ def counter():
             else:
                 return 1
     else:
-        return 'библиография не найдена'
+        raise FileNotFoundError

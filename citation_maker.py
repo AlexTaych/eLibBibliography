@@ -1,9 +1,23 @@
-from bs4 import BeautifulSoup
 import re
+from bs4 import BeautifulSoup
 from citation_dump import citation_dump, url_save, get_urls, counter
 
 
-def get_bibliography(html_content, url='', bibl=False):
+def get_bibliography(html_content: str, url: str, bibl=False) -> str | dict:
+    """Формирует библиографическое описание.
+
+    Библиографическое описание может быть "полным" или "коротким", если параметр bibl == True,
+    первое записывается в файл, а второе возвращается клиенту,
+    в обратном случае возвращается только "короткое" описание.
+    Args:
+        html_content (str): HTML страница публикации.
+        url (str): Адрес страницы публикации.
+        bibl (bool): Параметр проверки необходимости записи описания в библиографию.
+
+    Returns:
+        str | dict: В зависимости от параметра bibl, возвращает либо строку с коротким описанием,
+        либо словарь с полным и коротким описанием.
+    """
     soup = BeautifulSoup(html_content, 'html.parser')
     # Article type - str
     if soup.find('td', width='574'):
@@ -54,7 +68,17 @@ def get_bibliography(html_content, url='', bibl=False):
     else:
         return main_body
 
-def get_article(soup):
+
+def get_article(soup: BeautifulSoup) -> str:
+    """Формирует текст "короткого" библиографического описания научных статей.
+
+    Формирует описание ряда типов публикаций, имеющих общий вид статьи из научного журнала.
+    Args:
+        soup (BeautifulSoup): Объект BeautifulSoup, содержащий разобранный HTML.
+
+    Returns:
+        str: "Короткое" библиографическое описание.
+    """
     authors = get_authors(soup)
     title = get_title(soup)
 
@@ -108,7 +132,16 @@ def get_article(soup):
                   f'{journal}. - {". – ".join(metric_list)}.')
     return citation
 
-def get_conference(soup):
+
+def get_conference(soup: BeautifulSoup) -> str:
+    """Формирует текст "короткого" библиографического описания трудов конференций.
+
+    Args:
+        soup (BeautifulSoup): Объект BeautifulSoup, содержащий разобранный HTML.
+
+    Returns:
+        str: "Короткое" библиографическое описание.
+    """
     authors = get_authors(soup)
     title = get_title(soup)
     if soup.find('div', style='width:580px; margin:0; border:0; padding:0; '):
@@ -184,7 +217,17 @@ def get_conference(soup):
                     f'{place} : {publisher}, {year}. – С. {pages}.')
     return citation
 
-def get_dissertation(soup, autoref=False):
+
+def get_dissertation(soup: BeautifulSoup, autoref=False):
+    """Формирует текст "короткого" библиографического описания диссертаций и авторефератов.
+
+    Args:
+        soup (BeautifulSoup): Объект BeautifulSoup, содержащий разобранный HTML.
+        autoref (bool): Параметр проверки необходимости формирования описания автореферата диссертации.
+
+    Returns:
+        str: "Короткое" библиографическое описание.
+    """
     author_dict = get_authors(soup)
     author = author_dict['authors'][0]
     if soup.find('div', class_='tooltip'):
@@ -237,7 +280,17 @@ def get_dissertation(soup, autoref=False):
     return citation
 
 
-def get_authors(soup):
+def get_authors(soup: BeautifulSoup) -> dict:
+    """Формирует словарь с авторами публикации.
+
+    Словарь содержит два элемента: с ключом "authors" имеет значением список из авторов с инициалами после фамилии,
+    с ключом "authors_reversed" имеет список из авторов с инициалами перед фамилией.
+    Args:
+        soup (BeautifulSoup): Объект BeautifulSoup, содержащий разобранный HTML.
+
+    Returns:
+        dict: Словарь со списками авторов публикации.
+    """
     if soup.find_all('div', style='display: inline-block; white-space: nowrap'):
         authors = soup.find_all('div', style='display: inline-block; white-space: nowrap')
         if 'Страницы' not in authors[0].get_text(strip=True):
@@ -257,7 +310,16 @@ def get_authors(soup):
         authors_reversed = ''
     return {'authors': authors, 'authors_reversed': authors_reversed}
 
-def get_title(soup):
+
+def get_title(soup: BeautifulSoup) -> str:
+    """Возвращает заглавие публикации.
+
+    Args:
+        soup (BeautifulSoup): Объект BeautifulSoup, содержащий разобранный HTML.
+
+    Returns:
+        str: Заглавие публикации.
+    """
     if soup.find('td', width='534'):
         title = soup.find('td', width='534').find('b').get_text(strip=True).lower().capitalize()
     else:

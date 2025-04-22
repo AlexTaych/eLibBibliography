@@ -5,6 +5,7 @@ from pathlib import Path
 from citation_maker import get_bibliography
 from citation_dump import clean_bibliography
 
+
 app = FastAPI()
 
 # Разрешаем CORS (чтобы расширение могло обращаться к бэкенду)
@@ -31,13 +32,13 @@ async def generate_citation(request: Request):
         print(f"Ошибка при записи файла: {e}")
 
     if save_to_bibliography:
-        citation_dict = get_bibliography(html_content, url=url, bibl=True)
+        citation_dict = get_bibliography(html_content, url, bibl=True)
         if isinstance(citation_dict, dict):
             citation_resp = citation_dict['short_cite']
         else:
             citation_resp = citation_dict
     else:
-        citation_resp = get_bibliography(html_content, url=url)
+        citation_resp = get_bibliography(html_content, url)
 
     return JSONResponse({"citation": citation_resp})
 
